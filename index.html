@@ -18,6 +18,8 @@
       --red: #de4b5b;
       --orange: #e39d2e;
       --purple: #4e7be8;
+      --shadow-soft: 0 10px 24px rgba(17, 34, 68, .04);
+      --shadow-card: 0 14px 34px rgba(17, 34, 68, .06);
     }
 
     * {
@@ -33,6 +35,8 @@
       overflow: hidden;
       height: 100vh;
       width: 100vw;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     /* ── Navigation ── */
@@ -45,18 +49,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 32px;
+      padding: 12px 28px;
       background: rgba(243, 246, 251, .92);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      height: 56px;
+      height: 60px;
     }
 
     .nav-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--text-muted);
-      letter-spacing: .5px;
+      letter-spacing: .9px;
       text-transform: uppercase;
     }
 
@@ -134,7 +138,7 @@
       min-width: 100vw;
       width: 100vw;
       height: 100vh;
-      padding: 68px 40px 24px;
+      padding: 72px 36px 24px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -153,14 +157,14 @@
     .title-only-slide h1 {
       font-size: clamp(44px, 7vw, 92px);
       line-height: 1.08;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0;
       letter-spacing: -.02em;
     }
 
     /* ── Slide header ── */
     .slide-header {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       flex-shrink: 0;
     }
 
@@ -176,9 +180,9 @@
     }
 
     .badge-vision {
-      background: rgba(13, 110, 106, .08);
+      background: rgba(47, 111, 237, .1);
       color: var(--accent);
-      border: 1px solid rgba(13, 110, 106, .2);
+      border: 1px solid rgba(47, 111, 237, .24);
     }
 
     .badge-current {
@@ -188,43 +192,43 @@
     }
 
     .badge-phase1 {
-      background: rgba(13, 110, 106, .1);
+      background: rgba(47, 111, 237, .1);
       color: var(--accent);
-      border: 1px solid rgba(13, 110, 106, .25);
+      border: 1px solid rgba(47, 111, 237, .25);
     }
 
     .badge-phase2 {
-      background: rgba(123, 78, 160, .1);
+      background: rgba(78, 123, 232, .12);
       color: var(--purple);
-      border: 1px solid rgba(123, 78, 160, .25);
+      border: 1px solid rgba(78, 123, 232, .25);
     }
 
     .badge-phase3 {
-      background: rgba(13, 110, 106, .1);
+      background: rgba(34, 181, 115, .12);
       color: var(--green);
-      border: 1px solid rgba(13, 110, 106, .25);
+      border: 1px solid rgba(34, 181, 115, .25);
     }
 
     .slide-title {
-      font-size: 30px;
+      font-size: 34px;
       font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 6px;
+      line-height: 1.16;
+      margin-bottom: 8px;
     }
 
     .slide-subtitle {
-      font-size: 14px;
+      font-size: 16px;
       color: var(--text-muted);
-      max-width: 700px;
-      line-height: 1.5;
+      max-width: 900px;
+      line-height: 1.45;
     }
 
     .timeline-tag {
       display: inline-block;
-      margin-top: 8px;
-      padding: 3px 10px;
-      border-radius: 6px;
-      font-size: 12px;
+      margin-top: 10px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11px;
       font-weight: 600;
       background: var(--surface2);
       color: var(--text-muted);
@@ -330,7 +334,7 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 12px 28px rgba(17, 34, 68, .05);
+      box-shadow: var(--shadow-card);
     }
 
     .arch-panel h3 {
@@ -460,12 +464,12 @@
 
     .arch-box.internal {
       border-color: var(--accent);
-      background: rgba(13, 110, 106, .06);
+      background: rgba(47, 111, 237, .08);
     }
 
     .arch-box.app {
       border-color: var(--accent);
-      background: rgba(13, 110, 106, .04);
+      background: rgba(47, 111, 237, .06);
       border-radius: 14px;
       padding: 14px 18px;
       min-width: 180px;
@@ -473,8 +477,8 @@
 
     .arch-box.highlight {
       border-color: var(--green);
-      background: rgba(13, 110, 106, .06);
-      box-shadow: 0 0 16px rgba(13, 110, 106, .08);
+      background: rgba(34, 181, 115, .08);
+      box-shadow: 0 0 16px rgba(34, 181, 115, .12);
     }
 
     .arch-box.faded {
@@ -511,7 +515,7 @@
       border-radius: 20px;
       border: 1px solid var(--border);
       padding: 18px;
-      box-shadow: 0 10px 24px rgba(17, 34, 68, .04);
+      box-shadow: var(--shadow-soft);
     }
 
     .info-card h3 {
@@ -579,9 +583,10 @@
     /* ── Key changes bullets ── */
     .key-changes {
       background: var(--surface);
-      border-radius: 14px;
+      border-radius: 20px;
       border: 1px solid var(--border);
       padding: 18px;
+      box-shadow: var(--shadow-soft);
     }
 
     .key-changes h3 {
@@ -664,7 +669,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 10px 24px rgba(17, 34, 68, .04);
+      box-shadow: var(--shadow-soft);
     }
 
     .intro-side h2 {
@@ -716,7 +721,7 @@
     }
 
     .strategy-slide .intro-arrow {
-      color: var(--green);
+      color: var(--text-muted);
     }
 
     .intro-items {
@@ -793,7 +798,42 @@
       flex-direction: column;
       gap: 10px;
       transition: all .3s;
-      box-shadow: 0 10px 24px rgba(17, 34, 68, .04);
+      box-shadow: var(--shadow-soft);
+    }
+
+    @media (max-width: 980px) {
+      .slide {
+        padding: 68px 18px 18px;
+      }
+
+      .nav {
+        padding: 10px 12px;
+      }
+
+      .nav-title {
+        display: none;
+      }
+
+      .slide-title {
+        font-size: 28px;
+      }
+
+      .slide-subtitle {
+        font-size: 14px;
+      }
+
+      .slide-body,
+      .impact-grid,
+      .intro-body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .intro-arrow {
+        transform: rotate(90deg);
+        margin: 4px 0;
+      }
+
     }
 
     .impact-card:hover {
@@ -1043,7 +1083,7 @@
       </section>
 
       <!-- ════════════════ SLIDE 1 — Agent Benefits ════════════════ -->
-      <section class="slide strategy-slide">
+      <section class="slide">
         <div class="slide-header">
           <span class="slide-badge badge-vision">Vision &mdash; Agent</span>
           <h1 class="slide-title">A unified workspace, built for resolution</h1>
@@ -1569,7 +1609,7 @@
                   <tr>
                     <td>Callbacks</td>
                     <td><span class="status-icon status-no">✕</span></td>
-                    <td><span class="handled-by">Nowhere</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
                   </tr>
                 </tbody>
               </table>
