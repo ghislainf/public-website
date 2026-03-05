@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unified Support Experience</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --surface: #ffffff;
+      --surface2: #f0ede8;
+      --border: #e0dbd3;
+      --text: #1e1e2d;
+      --text-muted: #6e6b7b;
+      --accent: #0d6e6a;
+      --green: #0d6e6a;
+      --red: #c93c37;
+      --orange: #c77d00;
+      --purple: #7b4ea0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 32px;
+      background: rgba(250, 248, 245, .92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: 56px;
+    }
+
+    .nav-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .nav-steps {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .nav-dot {
+      width: 32px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--surface2);
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+
+    .nav-dot.active {
+      background: var(--accent);
+      width: 48px;
+    }
+
+    .nav-dot:hover:not(.active) {
+      background: #ccc;
+    }
+
+    .nav-arrows {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-arrows button {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+
+    .nav-arrows button:hover {
+      background: var(--surface2);
+      border-color: var(--accent);
+    }
+
+    .nav-arrows button:disabled {
+      opacity: .3;
+      cursor: default;
+      border-color: var(--border);
+    }
+
+    /* ── Slide viewport ── */
+    .slides-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slides-track {
+      display: flex;
+      height: 100%;
+      transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    /* ── Each slide ── */
+    .slide {
+      min-width: 100vw;
+      width: 100vw;
+      height: 100vh;
+      padding: 68px 40px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title-only-slide {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .title-only-slide h1 {
+      font-size: clamp(44px, 7vw, 92px);
+      line-height: 1.08;
+      max-width: 1100px;
+      margin: 0;
+    }
+
+    /* ── Slide header ── */
+    .slide-header {
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+
+    .slide-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .badge-vision {
+      background: rgba(13, 110, 106, .08);
+      color: var(--accent);
+      border: 1px solid rgba(13, 110, 106, .2);
+    }
+
+    .badge-current {
+      background: rgba(201, 60, 55, .1);
+      color: var(--red);
+      border: 1px solid rgba(201, 60, 55, .25);
+    }
+
+    .badge-phase1 {
+      background: rgba(13, 110, 106, .1);
+      color: var(--accent);
+      border: 1px solid rgba(13, 110, 106, .25);
+    }
+
+    .badge-phase2 {
+      background: rgba(123, 78, 160, .1);
+      color: var(--purple);
+      border: 1px solid rgba(123, 78, 160, .25);
+    }
+
+    .badge-phase3 {
+      background: rgba(13, 110, 106, .1);
+      color: var(--green);
+      border: 1px solid rgba(13, 110, 106, .25);
+    }
+
+    .slide-title {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .slide-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 700px;
+      line-height: 1.5;
+    }
+
+    .timeline-tag {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--surface2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .hero-intro {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(320px, .85fr) minmax(0, 1.25fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero-image-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 14px;
+      max-width: 560px;
+      padding: 4px 2px;
+    }
+
+    .hero-copy h3 {
+      font-size: 26px;
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+
+    .hero-copy p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .hero-point {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .hero-point strong {
+      color: var(--text);
+    }
+
+    .hero-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(13, 110, 106, .12);
+      color: var(--green);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .hero-image-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+      min-height: clamp(420px, 62vh, 640px);
+    }
+
+    .hero-image {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* ── Main content grid ── */
+    .slide-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      flex: 1;
+    }
+
+    /* ── Architecture diagram ── */
+    .arch-panel {
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .arch-panel h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .arch-diagram {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .arch-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .arch-column-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    /* ── Step 0 row-based diagram ── */
+    .arch-rows {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .arch-rows-header {
+      display: grid;
+      grid-template-columns: 140px 16px 1fr;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .arch-rows-header span {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .arch-row {
+      display: grid;
+      grid-template-columns: 140px 16px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .arch-row .arch-arrow {
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .arch-row-internal {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .arch-row-internal .arch-arrow {
+      font-size: 14px;
+    }
+
+    .arch-divider {
+      grid-column: 1 / -1;
+      border: none;
+      border-top: 1px dashed rgba(0, 0, 0, .1);
+      margin: 2px 0;
+    }
+
+    .phase1-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 140px 16px 1fr 16px 210px;
+      column-gap: 12px;
+      row-gap: 8px;
+      align-items: center;
+    }
+
+    .phase1-grid .arch-arrow {
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .phase1-app {
+      grid-column: 5;
+      grid-row: 1 / span 2;
+      min-width: 0;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .arch-box {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      font-size: 12px;
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      transition: all .3s;
+    }
+
+    .arch-box.external {
+      border-color: #c5c0b8;
+      background: #f5f2ed;
+    }
+
+    .arch-box.internal {
+      border-color: var(--accent);
+      background: rgba(13, 110, 106, .06);
+    }
+
+    .arch-box.app {
+      border-color: var(--accent);
+      background: rgba(13, 110, 106, .04);
+      border-radius: 14px;
+      padding: 14px 18px;
+      min-width: 180px;
+    }
+
+    .arch-box.highlight {
+      border-color: var(--green);
+      background: rgba(13, 110, 106, .06);
+      box-shadow: 0 0 16px rgba(13, 110, 106, .08);
+    }
+
+    .arch-box.faded {
+      opacity: .35;
+      border-style: dashed;
+    }
+
+    .app-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .app-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .arch-arrow {
+      color: var(--text-muted);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ── Right info column ── */
+    .info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 18px;
+    }
+
+    .info-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .status-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .status-table th {
+      text-align: left;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: var(--text-muted);
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .status-table td {
+      padding: 7px 0;
+      font-size: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, .06);
+      vertical-align: middle;
+    }
+
+    .status-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-yes {
+      background: rgba(13, 110, 106, .12);
+      color: var(--green);
+    }
+
+    .status-no {
+      background: rgba(201, 60, 55, .1);
+      color: var(--red);
+    }
+
+    .handled-by {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 2px 8px;
+      background: var(--surface2);
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    /* ── Key changes bullets ── */
+    .key-changes {
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 18px;
+    }
+
+    .key-changes h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .key-changes ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .key-changes li {
+      font-size: 12px;
+      line-height: 1.5;
+      padding-left: 16px;
+      position: relative;
+      color: var(--text-muted);
+    }
+
+    .key-changes li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .key-changes li strong {
+      color: var(--text);
+    }
+
+    /* ── Keyboard hint ── */
+    .keyboard-hint {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--surface);
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      opacity: .5;
+      z-index: 99;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 1px 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background: var(--surface2);
+      font-family: inherit;
+      font-size: 10px;
+      margin: 0 1px;
+    }
+
+    /* ── Intro slide ── */
+    .intro-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 0;
+      align-items: center;
+    }
+
+    .intro-side {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 28px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .intro-side h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .intro-side h2 .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .intro-side.before h2 .dot {
+      background: var(--red);
+    }
+
+    .intro-side.after h2 .dot {
+      background: var(--green);
+    }
+
+    .intro-side.before {
+      border-color: rgba(201, 60, 55, .2);
+    }
+
+    .intro-side.after {
+      border-color: rgba(13, 110, 106, .2);
+    }
+
+    .strategy-slide .intro-side.before,
+    .strategy-slide .intro-side.after {
+      border-color: rgba(13, 110, 106, .22);
+    }
+
+    .strategy-slide .intro-side.before h2 .dot,
+    .strategy-slide .intro-side.after h2 .dot {
+      background: var(--green);
+    }
+
+    .strategy-slide .before .intro-item-icon,
+    .strategy-slide .after .intro-item-icon {
+      background: rgba(13, 110, 106, .08);
+      border: 1px solid rgba(13, 110, 106, .18);
+    }
+
+    .strategy-slide .intro-arrow {
+      color: var(--green);
+    }
+
+    .intro-items {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .intro-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .intro-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .before .intro-item-icon {
+      background: rgba(201, 60, 55, .08);
+      border: 1px solid rgba(201, 60, 55, .18);
+    }
+
+    .after .intro-item-icon {
+      background: rgba(13, 110, 106, .08);
+      border: 1px solid rgba(13, 110, 106, .18);
+    }
+
+    .intro-item-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .intro-item-text span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .intro-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--text-muted);
+    }
+
+    /* ── Impact grid slide ── */
+    .impact-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .impact-card {
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all .3s;
+    }
+
+    .impact-card:hover {
+      border-color: rgba(13, 110, 106, .25);
+      background: rgba(13, 110, 106, .03);
+    }
+
+    .impact-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      background: rgba(13, 110, 106, .08);
+      border: 1px solid rgba(13, 110, 106, .15);
+    }
+
+    .impact-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .impact-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .impact-card .impact-tag {
+      margin-top: auto;
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      width: fit-content;
+    }
+
+    .tag-customer {
+      background: rgba(123, 78, 160, .1);
+      color: var(--purple);
+    }
+
+    .tag-agent {
+      background: rgba(13, 110, 106, .1);
+      color: var(--accent);
+    }
+
+    .tag-business {
+      background: rgba(13, 110, 106, .08);
+      color: #4a8a6d;
+    }
+
+    .slide[data-active="true"] .impact-card {
+      animation: fadeUp .45s ease both;
+    }
+
+    .slide[data-active="true"] .impact-card:nth-child(1) {
+      animation-delay: .03s;
+    }
+
+    .slide[data-active="true"] .impact-card:nth-child(2) {
+      animation-delay: .06s;
+    }
+
+    .slide[data-active="true"] .impact-card:nth-child(3) {
+      animation-delay: .09s;
+    }
+
+    .slide[data-active="true"] .impact-card:nth-child(4) {
+      animation-delay: .12s;
+    }
+
+    .slide[data-active="true"] .impact-card:nth-child(5) {
+      animation-delay: .15s;
+    }
+
+    .slide[data-active="true"] .impact-card:nth-child(6) {
+      animation-delay: .18s;
+    }
+
+    .slide[data-active="true"] .intro-side {
+      animation: fadeUp .45s ease both;
+    }
+
+    .slide[data-active="true"] .intro-side.after {
+      animation-delay: .15s;
+    }
+
+    .slide[data-active="true"] .intro-arrow {
+      animation: fadeUp .35s ease .05s both;
+    }
+
+    /* ── Entry animations ── */
+    .slide[data-active="true"] .arch-box,
+    .slide[data-active="true"] .info-card,
+    .slide[data-active="true"] .key-changes {
+      animation: fadeUp .45s ease both;
+    }
+
+    .slide[data-active="true"] .info-card:nth-child(1) {
+      animation-delay: .05s;
+    }
+
+    .slide[data-active="true"] .info-card:nth-child(2) {
+      animation-delay: .12s;
+    }
+
+    .slide[data-active="true"] .key-changes {
+      animation-delay: .18s;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-title">Unified Support Experience</div>
+    <div class="nav-steps">
+      <div class="nav-dot active" data-slide="0"></div>
+      <div class="nav-dot" data-slide="1"></div>
+      <div class="nav-dot" data-slide="2"></div>
+      <div class="nav-dot" data-slide="3"></div>
+      <div class="nav-dot" data-slide="4"></div>
+      <div class="nav-dot" data-slide="5"></div>
+      <div class="nav-dot" data-slide="6"></div>
+      <div class="nav-dot" data-slide="7"></div>
+      <div class="nav-dot" data-slide="8"></div>
+    </div>
+    <div class="nav-arrows">
+      <button id="prev" disabled>&#8592;</button>
+      <button id="next">&#8594;</button>
+    </div>
+  </nav>
+
+  <div class="slides-viewport">
+    <div class="slides-track" id="slidesTrack">
+
+      <!-- ════════════════ SLIDE 0 — Intro ════════════════ -->
+      <section class="slide title-only-slide" data-active="true">
+        <h1>Unified support experience for both agents and clients</h1>
+      </section>
+
+      <!-- ════════════════ SLIDE 1 — Vision / Intro ════════════════ -->
+      <section class="slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-vision">Vision &mdash; Customer</span>
+          <h1 class="slide-title">One continuous conversation, from first contact to resolution</h1>
+          <p class="slide-subtitle">Today, customers navigate disconnected channels when reaching out to support. Our
+            goal: a unified experience where every interaction &mdash; AI, chat, email, phone &mdash; lives in a single,
+            continuous conversation thread.</p>
+        </div>
+        <div class="intro-body">
+          <!-- BEFORE -->
+          <div class="intro-side before">
+            <h2><span class="dot"></span>Today</h2>
+            <div class="intro-items">
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f50c;</div>
+                <div class="intro-item-text">
+                  <strong>Fragmented journey</strong>
+                  <span>Customers move from AI to live-chat to email tickets to phone calls &mdash; each in a separate
+                    interface with no continuity.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f504;</div>
+                <div class="intro-item-text">
+                  <strong>Lost context</strong>
+                  <span>Switching channels can force customers to re-explain their issue, as agents may not have
+                    visibility into previous interactions.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x23f3;</div>
+                <div class="intro-item-text">
+                  <strong>Premature closure</strong>
+                  <span>In some cases, live-chat sessions end before the issue is fully resolved. A separate ticket is
+                    then created to continue &mdash; breaking the conversation flow.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f50d;</div>
+                <div class="intro-item-text">
+                  <strong>No unified tracking</strong>
+                  <span>Customers have no single place to view and follow up on all their support requests.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Arrow -->
+          <div class="intro-arrow">&#8594;</div>
+          <!-- AFTER -->
+          <div class="intro-side after">
+            <h2><span class="dot"></span>Tomorrow</h2>
+            <div class="intro-items">
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f4ac;</div>
+                <div class="intro-item-text">
+                  <strong>One conversation thread</strong>
+                  <span>Every interaction &mdash; AI, chat, email, phone &mdash; lives in a single continuous thread.
+                    Like messaging a friend.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f504;</div>
+                <div class="intro-item-text">
+                  <strong>Seamless sync-to-async transition</strong>
+                  <span>Customers can leave and come back anytime. The conversation stays open &mdash; no timeout, no
+                    lost progress.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f4cb;</div>
+                <div class="intro-item-text">
+                  <strong>Full context preserved</strong>
+                  <span>Agents see the complete history regardless of channel. No need to repeat information.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f4f1;</div>
+                <div class="intro-item-text">
+                  <strong>Everything in the PayFit app</strong>
+                  <span>Customers track all their support requests end-to-end, directly within the application.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 1 — Agent Benefits ════════════════ -->
+      <section class="slide strategy-slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-vision">Vision &mdash; Agent</span>
+          <h1 class="slide-title">A unified workspace, built for resolution</h1>
+          <p class="slide-subtitle">Agents spend less time navigating between tools and more time solving problems. One
+            workspace, full context, AI-powered assistance.</p>
+        </div>
+        <div class="intro-body">
+          <!-- BEFORE -->
+          <div class="intro-side before">
+            <h2><span class="dot"></span>Today</h2>
+            <div class="intro-items">
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f5c2;</div>
+                <div class="intro-item-text">
+                  <strong>Scattered tooling</strong>
+                  <span>Agents juggle between Salesforce Cases, Salesforce Live Chat, and the PayFit app. Each channel
+                    has its own interface.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f6d1;</div>
+                <div class="intro-item-text">
+                  <strong>Real-time pressure</strong>
+                  <span>Live-chat demands immediate responses, even when the issue requires deeper investigation or
+                    collaboration.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f50d;</div>
+                <div class="intro-item-text">
+                  <strong>Fragmented context</strong>
+                  <span>Copilot history lives in one tab, the case in another. Agents manually piece together the full
+                    picture.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f4cb;</div>
+                <div class="intro-item-text">
+                  <strong>Routing management</strong>
+                  <span>Routing is limited, making it harder to consistently assign each request to the best-qualified
+                    agent for the customer's specific need.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Arrow -->
+          <div class="intro-arrow">&#8594;</div>
+          <!-- AFTER -->
+          <div class="intro-side after">
+            <h2><span class="dot"></span>Tomorrow</h2>
+            <div class="intro-items">
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f4bb;</div>
+                <div class="intro-item-text">
+                  <strong>Work where the context lives</strong>
+                  <span>Agents operate directly inside the PayFit app, next to the customer's data. No more switching to
+                    Salesforce to respond.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x23f1;</div>
+                <div class="intro-item-text">
+                  <strong>Respond on your own terms</strong>
+                  <span>Reply in real-time or take the time to investigate. The hybrid model removes the pressure of
+                    forced synchronous chat.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f916;</div>
+                <div class="intro-item-text">
+                  <strong>AI-powered assistance</strong>
+                  <span>PayFit Copilot provides contextual suggestions and surfaces the complete conversation history to
+                    accelerate resolution.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f4e5;</div>
+                <div class="intro-item-text">
+                  <strong>Intelligent routing</strong>
+                  <span>Support requests are automatically pushed to the right agent via Amazon Connect. No more manual
+                    queue browsing.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 2 — Why It Matters ════════════════ -->
+      <section class="slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-vision">Why it matters</span>
+          <h1 class="slide-title">The expected impact</h1>
+          <p class="slide-subtitle">Unifying the support experience is not just a technical migration &mdash; it drives
+            measurable improvements for customers, agents, and the business.</p>
+        </div>
+        <div class="impact-grid">
+          <div class="impact-card">
+            <div class="impact-card-icon">&#x1f4c9;</div>
+            <h4>Faster resolution times</h4>
+            <p>Agents have full context from the start and can respond asynchronously when investigation is needed. No
+              more restarting from scratch across channels.</p>
+            <span class="impact-tag tag-business">Business</span>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">&#x2b50;</div>
+            <h4>Better support perception</h4>
+            <p>A seamless, continuous conversation gives customers the feeling of being truly heard &mdash; reducing
+              frustration and improving satisfaction scores.</p>
+            <span class="impact-tag tag-customer">Customer</span>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">&#x1f680;</div>
+            <h4>Higher agent productivity</h4>
+            <p>One workspace, fewer tool switches, AI-powered suggestions. Agents focus on solving problems rather than
+              navigating systems.</p>
+            <span class="impact-tag tag-agent">Agent</span>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">&#x1f4ca;</div>
+            <h4>Simplified monitoring</h4>
+            <p>A single conversation flow eliminates the need to track metrics across disconnected channels, providing
+              clearer insights into resolution patterns.</p>
+            <span class="impact-tag tag-business">Business</span>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">&#x1f504;</div>
+            <h4>Fewer follow-up cases</h4>
+            <p>Customers can easily find and continue their existing support request in the app, so fewer conversations
+              get lost and fewer relaunch cases are created.</p>
+            <span class="impact-tag tag-agent">Agent</span>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">&#x1f4ac;</div>
+            <h4>Copilot improves from agent feedback</h4>
+            <p>Because agents are the continuity layer across the full conversation, their feedback loops directly into
+              PayFit Copilot and improves answer quality upstream over time.</p>
+            <span class="impact-tag tag-business">Business</span>
+          </div>
+          <div class="impact-card">
+            <div class="impact-card-icon">&#x1f4b8;</div>
+            <h4>Lower Salesforce dependency and license footprint</h4>
+            <p>As workflows move into PayFit, we reduce operational dependency on Salesforce and can target roughly 100
+              fewer Salesforce licenses out of about 200 today, especially for resolution agents.</p>
+            <span class="impact-tag tag-business">Business</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 3 — Migration Strategy ════════════════ -->
+      <section class="slide strategy-slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-phase3">Migration strategy</span>
+          <h1 class="slide-title">A progressive migration, not a big bang</h1>
+          <p class="slide-subtitle">We are intentionally moving in three phases so we can deliver value early, reduce
+            delivery risk, and adapt effort over time without destabilizing teams.</p>
+        </div>
+        <div class="intro-body">
+          <div class="intro-side before">
+            <h2><span class="dot"></span>What we avoid</h2>
+            <div class="intro-items">
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f6d1;</div>
+                <div class="intro-item-text">
+                  <strong>No all-at-once cutover</strong>
+                  <span>We do not switch every interaction type and workflow in one release.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x23f1;</div>
+                <div class="intro-item-text">
+                  <strong>No delayed outcomes</strong>
+                  <span>We do not wait for the full end-state to start delivering customer and agent
+                    improvements.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="intro-arrow">&#8594;</div>
+          <div class="intro-side after">
+            <h2><span class="dot"></span>How we execute</h2>
+            <div class="intro-items">
+              <div class="intro-item">
+                <div class="intro-item-icon">&#x1f91d;</div>
+                <div class="intro-item-text">
+                  <strong>Phases are still under discussion</strong>
+                  <span>The objective now is to align on this phases</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">1</div>
+                <div class="intro-item-text">
+                  <strong>Phase 1: deliver immediate value</strong>
+                  <span>Remove inbox dependency and bring case visibility into Support Request in the app.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">2</div>
+                <div class="intro-item-text">
+                  <strong>Phase 2: unify the user journey</strong>
+                  <span>Merge sync and async interactions into one Support Request with continuity of context.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">3</div>
+                <div class="intro-item-text">
+                  <strong>Phase 3: complete routing migration</strong>
+                  <span>Finalize CCASS migration and move agents to the new console when the foundations are
+                    proven.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 4 — Current State ════════════════ -->
+      <section class="slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-current">Phase 0</span>
+          <h1 class="slide-title">Where we are today</h1>
+          <p class="slide-subtitle">Fragmented systems — the inbox, copilot threads, and Salesforce cases are
+            disconnected objects with no unified view for the user.</p>
+        </div>
+        <div class="slide-body">
+          <div class="arch-panel">
+            <h3>System Architecture</h3>
+            <div class="arch-rows">
+              <div class="arch-rows-header">
+                <span>External</span>
+                <span></span>
+                <span>Internal</span>
+              </div>
+              <!-- Row 1: Salesforce Case → Inbox -->
+              <div class="arch-row">
+                <div class="arch-box external" style="width:100%">Salesforce Case</div>
+                <span class="arch-arrow">&#8596;</span>
+                <div class="arch-row-internal">
+                  <div class="arch-box app" style="border-color:#ff9500; background:rgba(255,149,0,.06); flex:1">
+                    <div class="app-title">support.payfit.com/inbox</div>
+                    <div class="app-sub">Customer cases list</div>
+                  </div>
+                </div>
+              </div>
+              <hr class="arch-divider">
+              <!-- Row 2: Salesforce Live-chat → Copilot Threads → PayFit App -->
+              <div class="arch-row">
+                <div class="arch-box external" style="width:100%">Salesforce Live-chat</div>
+                <span class="arch-arrow">&#8596;</span>
+                <div class="arch-row-internal">
+                  <div class="arch-box internal">Copilot Threads</div>
+                  <span class="arch-arrow">&#8596;</span>
+                  <div class="arch-box app" style="border-color:#ff9500; background:rgba(255,149,0,.06); flex:1">
+                    <div class="app-title">PayFit App</div>
+                    <div class="app-sub">Copilot threads list</div>
+                  </div>
+                </div>
+              </div>
+              <hr class="arch-divider">
+              <!-- Row 3: Amazon Connect ← Request callback -->
+              <div class="arch-row">
+                <div class="arch-box external" style="width:100%">Amazon Connect</div>
+                <span class="arch-arrow">&#8592;</span>
+                <div class="arch-row-internal">
+                  <div class="arch-box internal" style="border-color:#ff9500; background:rgba(255,149,0,.04)">Request
+                    callback</div>
+                  <span style="font-size:11px; color:var(--text-muted)">inside PayFit App</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info-col">
+            <div class="info-card">
+              <h3>Support Request handles...</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>Handled by</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages (cases)</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Salesforce Case</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages (live-chat)</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Copilot thread</span></td>
+                  </tr>
+                  <tr>
+                    <td>AI messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Copilot thread</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-card">
+              <h3>CCASS Migration Status</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>System</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 5 — Phase 1 ════════════════ -->
+      <section class="slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-phase1">Phase 1</span>
+          <h1 class="slide-title">Get rid of the inbox, migrate cases to Support Request</h1>
+          <p class="slide-subtitle">Users can follow their email cases inside the app, replacing the inbox. Copilot
+            thread and Support Request are still two separate objects.</p>
+          <span class="timeline-tag">Timeline: Q2</span>
+        </div>
+        <div class="slide-body">
+          <div class="arch-panel">
+            <h3>System Architecture</h3>
+            <div class="arch-rows">
+              <div class="arch-rows-header" style="grid-template-columns:140px 16px 1fr 16px 210px;">
+                <span>External</span>
+                <span></span>
+                <span>Internal</span>
+                <span></span>
+                <span>PayFit App</span>
+              </div>
+              <div class="phase1-grid">
+                <div class="arch-box external" style="width:100%; grid-column:1; grid-row:1;">Salesforce Case</div>
+                <span class="arch-arrow" style="grid-column:2; grid-row:1;">&#8596;</span>
+                <div class="arch-box highlight" style="grid-column:3; grid-row:1;">Support Request</div>
+                <span class="arch-arrow" style="grid-column:4; grid-row:1;">&#8594;</span>
+
+                <div class="arch-box external" style="width:100%; grid-column:1; grid-row:2;">Salesforce Live-chat</div>
+                <span class="arch-arrow" style="grid-column:2; grid-row:2;">&#8596;</span>
+                <div class="arch-box internal" style="grid-column:3; grid-row:2;">Copilot Threads</div>
+                <span class="arch-arrow" style="grid-column:4; grid-row:2;">&#8594;</span>
+
+                <div class="arch-box app phase1-app" style="border-color:#ff9500; background:rgba(255,149,0,.06)">
+                  <div class="app-title">PayFit App</div>
+                  <div class="app-sub">Support requests + Copilot threads</div>
+                </div>
+
+                <div class="arch-box external" style="width:100%; grid-column:1; grid-row:3;">Amazon Connect</div>
+                <span class="arch-arrow" style="grid-column:2; grid-row:3;">&#8592;</span>
+                <div class="arch-row-internal" style="grid-column:3 / span 3; grid-row:3;">
+                  <div class="arch-box internal" style="border-color:#ff9500; background:rgba(255,149,0,.04)">Request
+                    callback</div>
+                  <span style="font-size:11px; color:var(--text-muted)">inside PayFit App</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info-col">
+            <div class="info-card">
+              <h3>Support Request handles...</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>Handled by</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages (cases)</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Support Request</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages (live-chat)</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Copilot thread</span></td>
+                  </tr>
+                  <tr>
+                    <td>AI messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Copilot thread</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-card">
+              <h3>CCASS Migration Status</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>System</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="key-changes">
+              <h3>What changes</h3>
+              <ul>
+                <li><strong>Inbox is deprecated</strong> — users see cases inside the PayFit app</li>
+                <li><strong>Support Request object created</strong> — syncs bi-directionally with Salesforce Case</li>
+                <li><strong>Copilot threads still separate</strong> — two objects visible to users</li>
+                <li><strong>Agents stay on Salesforce</strong> — no change to agent workflow</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 6 — Phase 2 ════════════════ -->
+      <section class="slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-phase2">Phase 2</span>
+          <h1 class="slide-title">All interactions live in the same Support Request</h1>
+          <p class="slide-subtitle">Users can follow their support request end-to-end in a single object. If a live-chat
+            escalates to a case, all messages stay in one place.</p>
+          <span class="timeline-tag">Timeline: Q3</span>
+        </div>
+        <div class="slide-body">
+          <div class="arch-panel">
+            <h3>System Architecture</h3>
+            <div class="arch-diagram">
+              <div class="arch-column">
+                <span class="arch-column-label">External</span>
+                <div class="arch-box external">Salesforce Case</div>
+                <div class="arch-box external">Salesforce Live-chat</div>
+                <div class="arch-box external">Amazon Connect</div>
+              </div>
+              <div class="arch-arrow">&#8596;</div>
+              <div class="arch-column">
+                <span class="arch-column-label">Internal</span>
+                <div class="arch-box highlight">Support Request</div>
+              </div>
+              <div class="arch-arrow">&#8596;</div>
+              <div class="arch-column">
+                <div class="arch-box app" style="border-color:var(--purple); background:rgba(175,82,222,.06)">
+                  <div class="app-title">PayFit App</div>
+                  <div class="app-sub">Support Requests (unified)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info-col">
+            <div class="info-card">
+              <h3>Support Request handles...</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>Handled by</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages (cases)</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Support Request</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages (live-chat)</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Support Request</span></td>
+                  </tr>
+                  <tr>
+                    <td>AI messages</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Support Request</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Nowhere</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-card">
+              <h3>CCASS Migration Status</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>System</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="key-changes">
+              <h3>What changes</h3>
+              <ul>
+                <li><strong>Copilot threads merged</strong> — AI and live-chat now live in the Support Request</li>
+                <li><strong>Single object for the user</strong> — no more switching between threads and cases</li>
+                <li><strong>Agent experience in PayFit app</strong> — multi-role Copilot Widget</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 7 — Phase 3 ════════════════ -->
+      <section class="slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-phase3">Phase 3</span>
+          <h1 class="slide-title">CCASS routes Support Requests on the new Agent Console</h1>
+          <p class="slide-subtitle">All interactions routed through Amazon Connect. Agents work entirely inside the
+            PayFit app.</p>
+          <span class="timeline-tag">Timeline: Q1 2027</span>
+        </div>
+        <div class="slide-body">
+          <div class="arch-panel">
+            <h3>System Architecture</h3>
+            <div class="arch-diagram">
+              <div class="arch-column">
+                <span class="arch-column-label">External</span>
+                <div class="arch-box external">Salesforce Case</div>
+                <div class="arch-box external faded">Salesforce Live-chat</div>
+                <div class="arch-box external">Amazon Connect</div>
+              </div>
+              <div class="arch-arrow">&#8596;</div>
+              <div class="arch-column">
+                <span class="arch-column-label">Internal</span>
+                <div class="arch-box highlight" style="box-shadow: 0 0 24px rgba(52,199,89,.15);">Support Request</div>
+              </div>
+              <div class="arch-arrow">&#8596;</div>
+              <div class="arch-column">
+                <div class="arch-box app" style="border-color:var(--green); background:rgba(52,199,89,.06)">
+                  <div class="app-title">PayFit App</div>
+                  <div class="app-sub">Support Requests (unified)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info-col">
+            <div class="info-card">
+              <h3>Support Request handles...</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>Handled by</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages (cases)</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Support Request</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages (live-chat)</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Support Request</span></td>
+                  </tr>
+                  <tr>
+                    <td>AI messages</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Support Request</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-card">
+              <h3>CCASS Migration Status</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>System</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="key-changes">
+              <h3>What changes</h3>
+              <ul>
+                <li><strong>Full CCASS migration</strong> — all interaction types routed through Amazon Connect</li>
+                <li><strong>Agent Console replaces Salesforce</strong> — agents work inside PayFit</li>
+                <li><strong>System-driven assignment</strong> — tasks pushed to agents via CTI</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Keyboard hint -->
+  <div class="keyboard-hint">
+    <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> arrow keys to navigate
+  </div>
+
+  <script>
+    let current = 0;
+    const track = document.getElementById('slidesTrack');
+    const dots = document.querySelectorAll('.nav-dot');
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+
+    function goTo(index) {
+      if (index < 0 || index >= total) return;
+      current = index;
+      track.style.transform = 'translateX(-' + (current * 100) + 'vw)';
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+      slides.forEach(function (s, i) { s.setAttribute('data-active', i === current ? 'true' : 'false'); });
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+    }
+
+    dots.forEach(function (d) { d.addEventListener('click', function () { goTo(+d.dataset.slide); }); });
+    prevBtn.addEventListener('click', function () { goTo(current - 1); });
+    nextBtn.addEventListener('click', function () { goTo(current + 1); });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') goTo(current + 1);
+      if (e.key === 'ArrowLeft') goTo(current - 1);
+    });
+  </script>
+</body>
+
+</html>
