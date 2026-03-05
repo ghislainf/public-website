@@ -761,22 +761,19 @@
     /* ── Impact grid slide ── */
     .impact-grid {
       flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       align-content: start;
     }
 
-    .impact-card {
-      background: var(--surface);
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
+    .impact-line {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr) auto;
       gap: 10px;
-      transition: all .3s;
-      box-shadow: var(--shadow-soft);
+      align-items: center;
+      padding: 8px 2px;
+      border-bottom: 1px solid rgba(0, 0, 0, .08);
     }
 
     @media (max-width: 980px) {
@@ -812,38 +809,45 @@
         margin: 4px 0;
       }
 
+      .impact-line {
+        grid-template-columns: 24px 1fr;
+        gap: 8px;
+      }
+
+      .impact-tag {
+        grid-column: 2;
+        justify-self: start;
+      }
+
     }
 
-    .impact-card:hover {
-      border-color: rgba(13, 110, 106, .25);
-      background: rgba(13, 110, 106, .03);
+    .impact-line:last-child {
+      border-bottom: none;
     }
 
     .impact-card-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
       background: rgba(13, 110, 106, .08);
       border: 1px solid rgba(13, 110, 106, .15);
     }
 
-    .impact-card h4 {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .impact-card p {
+    .impact-line p {
       font-size: 12px;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.35;
     }
 
-    .impact-card .impact-tag {
-      margin-top: auto;
+    .impact-line p strong {
+      color: var(--text);
+    }
+
+    .impact-tag {
       display: inline-block;
       padding: 2px 8px;
       border-radius: 4px;
@@ -869,32 +873,36 @@
       color: #4a8a6d;
     }
 
-    .slide[data-active="true"] .impact-card {
+    .slide[data-active="true"] .impact-line {
       animation: fadeUp .45s ease both;
     }
 
-    .slide[data-active="true"] .impact-card:nth-child(1) {
+    .slide[data-active="true"] .impact-line:nth-child(1) {
       animation-delay: .03s;
     }
 
-    .slide[data-active="true"] .impact-card:nth-child(2) {
+    .slide[data-active="true"] .impact-line:nth-child(2) {
       animation-delay: .06s;
     }
 
-    .slide[data-active="true"] .impact-card:nth-child(3) {
+    .slide[data-active="true"] .impact-line:nth-child(3) {
       animation-delay: .09s;
     }
 
-    .slide[data-active="true"] .impact-card:nth-child(4) {
+    .slide[data-active="true"] .impact-line:nth-child(4) {
       animation-delay: .12s;
     }
 
-    .slide[data-active="true"] .impact-card:nth-child(5) {
+    .slide[data-active="true"] .impact-line:nth-child(5) {
       animation-delay: .15s;
     }
 
-    .slide[data-active="true"] .impact-card:nth-child(6) {
+    .slide[data-active="true"] .impact-line:nth-child(6) {
       animation-delay: .18s;
+    }
+
+    .slide[data-active="true"] .impact-line:nth-child(7) {
+      animation-delay: .21s;
     }
 
     .slide[data-active="true"] .intro-side {
@@ -1155,57 +1163,51 @@
         <div class="slide-header">
           <span class="slide-badge badge-vision">Why it matters</span>
           <h1 class="slide-title">The expected impact</h1>
-          <p class="slide-subtitle">Unifying the support experience is not just a technical migration &mdash; it drives
-            measurable improvements for customers, agents, and the business.</p>
+          <p class="slide-subtitle">Unifying the support experience is not just a technical migration &mdash; it creates
+            clear
+            qualitative gains for customers, agents, and the business.</p>
         </div>
         <div class="impact-grid">
-          <div class="impact-card">
-            <div class="impact-card-icon">&#x1f4c9;</div>
-            <h4>Faster resolution times</h4>
-            <p>Agents have full context from the start and can respond asynchronously when investigation is needed. No
-              more restarting from scratch across channels.</p>
-            <span class="impact-tag tag-business">Business</span>
-          </div>
-          <div class="impact-card">
+          <div class="impact-line">
             <div class="impact-card-icon">&#x2b50;</div>
-            <h4>Better support perception</h4>
-            <p>A seamless, continuous conversation gives customers the feeling of being truly heard &mdash; reducing
-              frustration and improving satisfaction scores.</p>
+            <p><strong>Better support perception</strong> &mdash; A seamless, continuous conversation gives customers
+              the feeling of being truly heard — reducing frustration</p>
             <span class="impact-tag tag-customer">Customer</span>
           </div>
-          <div class="impact-card">
+          <div class="impact-line">
             <div class="impact-card-icon">&#x1f680;</div>
-            <h4>Higher agent productivity</h4>
-            <p>One workspace, fewer tool switches, AI-powered suggestions. Agents focus on solving problems rather than
-              navigating systems.</p>
+            <p><strong>Higher agent productivity</strong> &mdash; One workspace and AI guidance let agents focus on
+              solving.</p>
             <span class="impact-tag tag-agent">Agent</span>
           </div>
-          <div class="impact-card">
-            <div class="impact-card-icon">&#x1f4ca;</div>
-            <h4>Simplified monitoring</h4>
-            <p>A single conversation flow eliminates the need to track metrics across disconnected channels, providing
-              clearer insights into resolution patterns.</p>
-            <span class="impact-tag tag-business">Business</span>
-          </div>
-          <div class="impact-card">
+          <div class="impact-line">
             <div class="impact-card-icon">&#x1f504;</div>
-            <h4>Fewer follow-up cases</h4>
-            <p>Customers can easily find and continue their existing support request in the app, so fewer conversations
-              get lost and fewer relaunch cases are created.</p>
+            <p><strong>Fewer follow-up cases</strong> &mdash; Requests stay findable and resumable, reducing dropped
+              conversations.</p>
             <span class="impact-tag tag-agent">Agent</span>
           </div>
-          <div class="impact-card">
-            <div class="impact-card-icon">&#x1f4ac;</div>
-            <h4>Copilot improves from agent feedback</h4>
-            <p>Because agents are the continuity layer across the full conversation, their feedback loops directly into
-              PayFit Copilot and improves answer quality upstream over time.</p>
+          <div class="impact-line">
+            <div class="impact-card-icon">&#x1f4c9;</div>
+            <p><strong>Faster resolution times</strong> &mdash; Full context plus async work means quicker, smoother
+              resolution.</p>
             <span class="impact-tag tag-business">Business</span>
           </div>
-          <div class="impact-card">
+          <div class="impact-line">
+            <div class="impact-card-icon">&#x1f4ca;</div>
+            <p><strong>Simplified monitoring</strong> &mdash; Teams only need to follow the Support Request object
+              across the full journey.</p>
+            <span class="impact-tag tag-business">Business</span>
+          </div>
+          <div class="impact-line">
+            <div class="impact-card-icon">&#x1f4ac;</div>
+            <p><strong>Copilot improves from agent feedback</strong> &mdash; Agent feedback continuously improves
+              Copilot answer relevance.</p>
+            <span class="impact-tag tag-business">Business</span>
+          </div>
+          <div class="impact-line">
             <div class="impact-card-icon">&#x1f4b8;</div>
-            <h4>Lower Salesforce dependency and license footprint</h4>
-            <p>As workflows move into PayFit, we reduce operational dependency on Salesforce and can target roughly 100
-              fewer Salesforce licenses out of about 200 today, especially for resolution agents.</p>
+            <p><strong>Lower Salesforce dependency and license footprint</strong> &mdash; Moving workflows to PayFit
+              lowers Salesforce dependency and footprint.</p>
             <span class="impact-tag tag-business">Business</span>
           </div>
         </div>
