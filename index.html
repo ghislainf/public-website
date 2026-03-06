@@ -326,6 +326,13 @@
       border-color: rgba(24, 48, 77, .14);
     }
 
+    .badge-risk {
+      background: rgba(219, 107, 95, .16);
+      color: #9f2f25;
+      border-color: rgba(219, 107, 95, .42);
+      box-shadow: 0 0 0 2px rgba(219, 107, 95, .08);
+    }
+
     .slide-title {
       font-family: 'Manrope', 'DM Sans', sans-serif;
       font-size: 34px;
@@ -352,6 +359,25 @@
       background: rgba(255, 255, 255, .76);
       color: var(--text-muted);
       border: 1px solid rgba(24, 48, 77, .08);
+    }
+
+    .timeline-tag-risk {
+      background: rgba(219, 107, 95, .12);
+      color: #9f2f25;
+      border-color: rgba(219, 107, 95, .34);
+    }
+
+    .risk-note {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(219, 107, 95, .38);
+      background: linear-gradient(180deg, rgba(255, 235, 233, .92) 0%, rgba(255, 248, 246, .92) 100%);
+      color: #9f2f25;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .02em;
     }
 
     .hero-intro {
@@ -749,6 +775,24 @@
       color: var(--text);
     }
 
+    .slide-risk .arch-panel,
+    .slide-risk .info-card,
+    .slide-risk .key-changes {
+      border-color: rgba(219, 107, 95, .28);
+    }
+
+    .slide-risk .key-changes {
+      background: linear-gradient(180deg, rgba(255, 240, 238, .88) 0%, rgba(255, 248, 246, .86) 100%);
+    }
+
+    .slide-risk .key-changes h3 {
+      color: #9f2f25;
+    }
+
+    .slide-risk .key-changes li::before {
+      background: var(--red);
+    }
+
     /* ── Keyboard hint ── */
     .keyboard-hint {
       position: fixed;
@@ -1124,6 +1168,7 @@
       <div class="nav-dot" data-slide="6"></div>
       <div class="nav-dot" data-slide="7"></div>
       <div class="nav-dot" data-slide="8"></div>
+      <div class="nav-dot" data-slide="9"></div>
     </div>
     <div class="nav-arrows">
       <button id="prev" disabled>&#8592;</button>
@@ -1424,14 +1469,21 @@
               <div class="intro-item">
                 <div class="intro-item-icon">2</div>
                 <div class="intro-item-text">
-                  <strong>Phase 2: unify the user journey</strong>
-                  <span>Merge sync and async interactions into one Support Request with continuity of context.</span>
+                  <strong>Phase 2 (alternative): move live-chat to CCASS</strong>
+                  <span>Possible but not recommended, as live-chat is temporary and will later be replaced.</span>
                 </div>
               </div>
               <div class="intro-item">
                 <div class="intro-item-icon">3</div>
                 <div class="intro-item-text">
-                  <strong>Phase 3: complete routing migration</strong>
+                  <strong>Phase 3: unify the user journey</strong>
+                  <span>Merge sync and async interactions into one Support Request with continuity of context.</span>
+                </div>
+              </div>
+              <div class="intro-item">
+                <div class="intro-item-icon">4</div>
+                <div class="intro-item-text">
+                  <strong>Phase 4: complete routing migration</strong>
                   <span>Finalize CCASS migration and move agents to the new console when the foundations are
                     proven.</span>
                 </div>
@@ -1682,10 +1734,133 @@
         </div>
       </section>
 
-      <!-- ════════════════ SLIDE 6 — Phase 2 ════════════════ -->
+      <!-- ════════════════ SLIDE 6 — Alternative Step (Not Recommended) ════════════════ -->
+      <section class="slide slide-risk">
+        <div class="slide-header">
+          <span class="slide-badge badge-phase2 badge-risk">Phase 2 (not recommanded)</span>
+          <h1 class="slide-title">Move live-chat to CCASS only (not recommended)</h1>
+          <p class="slide-subtitle">This alternative only moves live-chat to CCASS. It can help in the short term, but
+            we still need the Support Request entity to handle async messages and run the Agent Console properly.
+            Without Support Request, this step remains partial and will likely create rework later.</p>
+          <span class="timeline-tag timeline-tag-risk">Timeline: N/A</span>
+        </div>
+        <div class="slide-body">
+          <div class="arch-panel">
+            <h3>System Architecture</h3>
+            <div class="arch-rows">
+              <div class="arch-rows-header" style="grid-template-columns:140px 16px 1fr 16px 210px;">
+                <span>External</span>
+                <span></span>
+                <span>Internal</span>
+                <span></span>
+                <span>PayFit App</span>
+              </div>
+              <div class="phase1-grid">
+                <div class="arch-box external" style="width:100%; grid-column:1; grid-row:1;">Salesforce Case</div>
+                <span class="arch-arrow" style="grid-column:2; grid-row:1;">&#8596;</span>
+                <div class="arch-box highlight" style="grid-column:3; grid-row:1;">Support Request</div>
+                <span class="arch-arrow" style="grid-column:4; grid-row:1;">&#8594;</span>
+
+                <div class="arch-box external" style="width:100%; grid-column:1; grid-row:2;">connect Live-chat</div>
+                <span class="arch-arrow" style="grid-column:2; grid-row:2;">&#8596;</span>
+                <div class="arch-box internal" style="grid-column:3; grid-row:2;">Copilot Threads</div>
+                <span class="arch-arrow" style="grid-column:4; grid-row:2;">&#8594;</span>
+
+                <div class="arch-box app phase1-app"
+                  style="border-color:rgba(246, 189, 85, .38); background:linear-gradient(135deg, rgba(255, 242, 184, .62) 0%, rgba(255, 255, 255, .9) 100%)">
+                  <div class="app-title">PayFit App</div>
+                  <div class="app-sub">Support requests + Copilot threads</div>
+                </div>
+
+                <div class="arch-box external" style="width:100%; grid-column:1; grid-row:3;">Amazon Connect</div>
+                <span class="arch-arrow" style="grid-column:2; grid-row:3;">&#8592;</span>
+                <div class="arch-row-internal" style="grid-column:3 / span 3; grid-row:3;">
+                  <div class="arch-box internal"
+                    style="border-color:rgba(246, 189, 85, .38); background:rgba(255, 242, 184, .42)">Request
+                    callback</div>
+                  <span style="font-size:11px; color:var(--text-muted)">inside PayFit App</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info-col">
+            <div class="info-card">
+              <h3>Support Request handles...</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>Handled by</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages (cases)</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Support Request</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages (live-chat)</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Copilot thread</span></td>
+                  </tr>
+                  <tr>
+                    <td>AI messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Copilot thread</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="info-card">
+              <h3>CCASS Migration Status</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Interaction type</th>
+                    <th></th>
+                    <th>System</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Async messages</td>
+                    <td><span class="status-icon status-no">✕</span></td>
+                    <td><span class="handled-by">Salesforce</span></td>
+                  </tr>
+                  <tr>
+                    <td>Sync messages</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                  <tr>
+                    <td>Callbacks</td>
+                    <td><span class="status-icon status-yes">✓</span></td>
+                    <td><span class="handled-by">Amazon Connect</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="key-changes">
+              <h3>What changes</h3>
+              <ul>
+                <li><strong>Live-chat moved to CCASS</strong> — agents can handle salesforce live-chat in CTI instead of
+                  Salesforce Live-chat</li>
+                <li><strong>Support Request still missing</strong> — no unified sync/async source of truth</li>
+                <li><strong>Not recommended</strong> — live-chat is temporary and will be deprecated for Support Request
+                  sync/async</li>
+                <li><strong>This step work will be completely trashed later.</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 7 — Phase 3 ════════════════ -->
       <section class="slide">
         <div class="slide-header">
-          <span class="slide-badge badge-phase2">Phase 2</span>
+          <span class="slide-badge badge-phase3">Phase 3</span>
           <h1 class="slide-title">All interactions live in the same Support Request</h1>
           <p class="slide-subtitle">Users can follow their support request end-to-end in a single object. If a live-chat
             escalates to a case, all messages stay in one place.</p>
@@ -1787,10 +1962,10 @@
         </div>
       </section>
 
-      <!-- ════════════════ SLIDE 7 — Phase 3 ════════════════ -->
+      <!-- ════════════════ SLIDE 8 — Phase 4 ════════════════ -->
       <section class="slide">
         <div class="slide-header">
-          <span class="slide-badge badge-phase3">Phase 3</span>
+          <span class="slide-badge badge-phase3">Phase 4</span>
           <h1 class="slide-title">CCASS routes Support Requests on the new Agent Console</h1>
           <p class="slide-subtitle">All interactions routed through Amazon Connect. Agents work entirely inside the
             PayFit app.</p>
@@ -1883,12 +2058,12 @@
             <div class="key-changes">
               <h3>What changes</h3>
               <ul>
-                <li><strong>Salesforce Live-chat removed</strong> — Support Requests now handle both sync and async
-                  interactions</li>
+                <li><strong>Salesforce Live-chat removed</strong></li>
                 <li><strong>Support Requests handle both sync and async
                     interactions</li>
-                <li><strong>New agent Console replaces Salesforce</strong> while salesforce cases remain available for
-                  specific agent roles</li>
+                <li><strong>New agent Console replaces Salesforce</strong> while salesforce cases remain
+                  available for
+                  specific agent roles</strong></li>
                 <li><strong>Amazon connect assign support requests to agents</li>
               </ul>
             </div>
