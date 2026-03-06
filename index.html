@@ -6,20 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Unified Support Experience</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+
     :root {
-      --bg: #f3f6fb;
-      --surface: #ffffff;
-      --surface2: #edf2ff;
-      --border: #dce4ef;
-      --text: #0b1633;
-      --text-muted: #5f6f87;
-      --accent: #2f6fed;
-      --green: #22b573;
-      --red: #de4b5b;
-      --orange: #e39d2e;
-      --purple: #4e7be8;
-      --shadow-soft: 0 10px 24px rgba(17, 34, 68, .04);
-      --shadow-card: 0 14px 34px rgba(17, 34, 68, .06);
+      --bg: #f8f4ea;
+      --surface: rgba(255, 255, 255, .78);
+      --surface-strong: #fffdf7;
+      --surface2: #eef5ff;
+      --border: rgba(18, 48, 84, .12);
+      --text: #18304d;
+      --text-muted: #607089;
+      --accent: #0f6fde;
+      --accent-soft: rgba(15, 111, 222, .12);
+      --green: #2fb58a;
+      --red: #db6b5f;
+      --orange: #f6bd55;
+      --purple: #5771d9;
+      --yellow-soft: #fff2b8;
+      --navy-soft: #e8eef8;
+      --shadow-soft: 0 16px 40px rgba(28, 53, 87, .08);
+      --shadow-card: 0 24px 60px rgba(28, 53, 87, .12);
+      --radius-xl: 28px;
     }
 
     * {
@@ -29,8 +36,12 @@
     }
 
     body {
-      font-family: 'Avenir Next', 'Nunito Sans', 'Segoe UI', sans-serif;
-      background: var(--bg);
+      font-family: 'DM Sans', 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(1200px 560px at 12% 10%, rgba(69, 160, 255, .24), transparent 66%),
+        radial-gradient(980px 500px at 88% 18%, rgba(15, 111, 222, .2), transparent 68%),
+        radial-gradient(1000px 520px at 50% 100%, rgba(24, 89, 182, .12), transparent 70%),
+        linear-gradient(180deg, rgba(240, 247, 255, .72) 0%, rgba(233, 243, 255, .36) 100%);
       color: var(--text);
       overflow: hidden;
       height: 100vh;
@@ -42,25 +53,55 @@
     /* ── Navigation ── */
     .nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 16px;
+      left: 20px;
+      right: 20px;
       z-index: 100;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 28px;
-      background: rgba(243, 246, 251, .92);
+      padding: 12px 18px;
+      background: rgba(255, 252, 246, .78);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      height: 60px;
+      border: 1px solid rgba(24, 48, 77, .08);
+      box-shadow: 0 18px 45px rgba(27, 51, 84, .08);
+      border-radius: 22px;
+      height: 68px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .nav-logo {
+      height: 28px;
+      width: auto;
+      flex-shrink: 0;
     }
 
     .nav-title {
-      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .nav-title strong {
+      font-family: 'Manrope', 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--text);
+    }
+
+    .nav-title span {
+      font-size: 11px;
       font-weight: 600;
       color: var(--text-muted);
-      letter-spacing: .9px;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
@@ -74,18 +115,18 @@
       width: 32px;
       height: 6px;
       border-radius: 3px;
-      background: var(--surface2);
+      background: rgba(15, 111, 222, .12);
       cursor: pointer;
       transition: all .3s ease;
     }
 
     .nav-dot.active {
-      background: var(--accent);
+      background: linear-gradient(90deg, var(--accent) 0%, #45a0ff 100%);
       width: 48px;
     }
 
     .nav-dot:hover:not(.active) {
-      background: #ccc;
+      background: rgba(24, 48, 77, .22);
     }
 
     .nav-arrows {
@@ -96,9 +137,9 @@
     .nav-arrows button {
       width: 36px;
       height: 36px;
-      border-radius: 8px;
+      border-radius: 12px;
       border: 1px solid var(--border);
-      background: var(--surface);
+      background: rgba(255, 255, 255, .88);
       color: var(--text);
       font-size: 16px;
       cursor: pointer;
@@ -110,7 +151,8 @@
 
     .nav-arrows button:hover {
       background: var(--surface2);
-      border-color: var(--accent);
+      border-color: rgba(15, 111, 222, .28);
+      transform: translateY(-1px);
     }
 
     .nav-arrows button:disabled {
@@ -138,7 +180,7 @@
       min-width: 100vw;
       width: 100vw;
       height: 100vh;
-      padding: 72px 36px 24px;
+      padding: 108px 36px 28px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -148,18 +190,90 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      background:
-        radial-gradient(1200px 500px at 80% 90%, rgba(34, 181, 115, .12), transparent 65%),
-        radial-gradient(1000px 420px at 18% 10%, rgba(47, 111, 237, .14), transparent 65%),
-        var(--bg);
+      background: transparent;
+    }
+
+    .title-shell {
+      width: min(980px, 100%);
+      padding: clamp(32px, 4vw, 56px) clamp(28px, 5vw, 64px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .title-shell::before,
+    .title-shell::after {
+      content: none;
+    }
+
+    .title-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 242, 184, .72);
+      border: 1px solid rgba(246, 189, 85, .34);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--text);
+    }
+
+    .title-kicker::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
     }
 
     .title-only-slide h1 {
-      font-size: clamp(44px, 7vw, 92px);
-      line-height: 1.08;
-      max-width: 1200px;
-      margin: 0;
+      font-family: 'Manrope', 'DM Sans', sans-serif;
+      font-size: clamp(44px, 7vw, 86px);
+      line-height: 1.02;
+      max-width: 900px;
+      margin: 0 auto;
       letter-spacing: -.02em;
+    }
+
+    .title-note {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .title-meta {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .title-metric {
+      padding: 18px 20px;
+      border-radius: 22px;
+      text-align: left;
+      background: rgba(255, 255, 255, .76);
+      border: 1px solid rgba(24, 48, 77, .08);
+    }
+
+    .title-metric strong {
+      display: block;
+      margin-bottom: 6px;
+      font-family: 'Manrope', 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .title-metric span {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-muted);
     }
 
     /* ── Slide header ── */
@@ -170,23 +284,55 @@
 
     .slide-badge {
       display: inline-block;
-      padding: 3px 12px;
+      padding: 5px 13px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 8px;
-      background: rgba(47, 111, 237, .1);
+      background: rgba(255, 255, 255, .72);
+      color: var(--text);
+      border: 1px solid rgba(24, 48, 77, .08);
+    }
+
+    .badge-vision {
+      background: rgba(15, 111, 222, .1);
       color: var(--accent);
-      border: 1px solid rgba(47, 111, 237, .24);
+      border-color: rgba(15, 111, 222, .18);
+    }
+
+    .badge-current {
+      background: rgba(246, 189, 85, .22);
+      color: #9b6c08;
+      border-color: rgba(246, 189, 85, .36);
+    }
+
+    .badge-phase1 {
+      background: rgba(47, 181, 138, .12);
+      color: #1d8363;
+      border-color: rgba(47, 181, 138, .24);
+    }
+
+    .badge-phase2 {
+      background: rgba(87, 113, 217, .12);
+      color: var(--purple);
+      border-color: rgba(87, 113, 217, .22);
+    }
+
+    .badge-phase3 {
+      background: rgba(24, 48, 77, .08);
+      color: var(--text);
+      border-color: rgba(24, 48, 77, .14);
     }
 
     .slide-title {
+      font-family: 'Manrope', 'DM Sans', sans-serif;
       font-size: 34px;
-      font-weight: 700;
+      font-weight: 800;
       line-height: 1.16;
       margin-bottom: 8px;
+      letter-spacing: -.03em;
     }
 
     .slide-subtitle {
@@ -203,9 +349,9 @@
       border-radius: 999px;
       font-size: 11px;
       font-weight: 600;
-      background: var(--surface2);
+      background: rgba(255, 255, 255, .76);
       color: var(--text-muted);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(24, 48, 77, .08);
     }
 
     .hero-intro {
@@ -260,7 +406,7 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(13, 110, 106, .12);
+      background: rgba(47, 181, 138, .12);
       color: var(--green);
       display: inline-flex;
       align-items: center;
@@ -301,8 +447,8 @@
 
     /* ── Architecture diagram ── */
     .arch-panel {
-      background: var(--surface);
-      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .86) 0%, rgba(255, 252, 246, .72) 100%);
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border);
       padding: 20px;
       display: flex;
@@ -314,7 +460,7 @@
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: var(--text-muted);
+      color: var(--accent);
       margin-bottom: 16px;
     }
 
@@ -420,38 +566,38 @@
 
     .arch-box {
       padding: 8px 14px;
-      border-radius: 8px;
+      border-radius: 14px;
       border: 1px solid var(--border);
-      background: var(--surface2);
+      background: rgba(255, 255, 255, .82);
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       text-align: center;
       white-space: nowrap;
       transition: all .3s;
     }
 
     .arch-box.external {
-      border-color: #c9d8ee;
-      background: #f3f7ff;
+      border-color: rgba(15, 111, 222, .14);
+      background: rgba(238, 245, 255, .88);
     }
 
     .arch-box.internal {
-      border-color: var(--accent);
-      background: rgba(47, 111, 237, .08);
+      border-color: rgba(15, 111, 222, .22);
+      background: rgba(15, 111, 222, .08);
     }
 
     .arch-box.app {
-      border-color: var(--accent);
-      background: rgba(47, 111, 237, .06);
-      border-radius: 14px;
+      border-color: rgba(246, 189, 85, .38);
+      background: linear-gradient(135deg, rgba(255, 242, 184, .62) 0%, rgba(255, 255, 255, .9) 100%);
+      border-radius: 20px;
       padding: 14px 18px;
       min-width: 180px;
     }
 
     .arch-box.highlight {
-      border-color: var(--green);
-      background: rgba(34, 181, 115, .08);
-      box-shadow: 0 0 16px rgba(34, 181, 115, .12);
+      border-color: rgba(47, 181, 138, .34);
+      background: rgba(47, 181, 138, .12);
+      box-shadow: 0 0 22px rgba(47, 181, 138, .14);
     }
 
     .arch-box.faded {
@@ -466,7 +612,7 @@
 
     .app-title {
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 4px;
     }
 
@@ -489,8 +635,8 @@
     }
 
     .info-card {
-      background: var(--surface);
-      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .84) 0%, rgba(255, 252, 246, .74) 100%);
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border);
       padding: 18px;
       box-shadow: var(--shadow-soft);
@@ -498,7 +644,7 @@
 
     .info-card h3 {
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 12px;
     }
 
@@ -534,18 +680,18 @@
       justify-content: center;
       width: 22px;
       height: 22px;
-      border-radius: 5px;
+      border-radius: 8px;
       font-size: 12px;
       font-weight: 700;
     }
 
     .status-yes {
-      background: rgba(13, 110, 106, .12);
+      background: rgba(47, 181, 138, .12);
       color: var(--green);
     }
 
     .status-no {
-      background: rgba(201, 60, 55, .1);
+      background: rgba(219, 107, 95, .1);
       color: var(--red);
     }
 
@@ -553,15 +699,15 @@
       font-size: 11px;
       color: var(--text-muted);
       padding: 2px 8px;
-      background: var(--surface2);
-      border-radius: 5px;
+      background: rgba(238, 245, 255, .9);
+      border-radius: 999px;
       display: inline-block;
     }
 
     /* ── Key changes bullets ── */
     .key-changes {
-      background: var(--surface);
-      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .84) 0%, rgba(255, 252, 246, .74) 100%);
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border);
       padding: 18px;
       box-shadow: var(--shadow-soft);
@@ -611,7 +757,7 @@
       transform: translateX(-50%);
       font-size: 11px;
       color: var(--text-muted);
-      background: var(--surface);
+      background: rgba(255, 252, 246, .82);
       padding: 4px 14px;
       border-radius: 20px;
       border: 1px solid var(--border);
@@ -622,9 +768,9 @@
     kbd {
       display: inline-block;
       padding: 1px 5px;
-      border: 1px solid #ccc;
+      border: 1px solid rgba(24, 48, 77, .12);
       border-radius: 3px;
-      background: var(--surface2);
+      background: rgba(238, 245, 255, .9);
       font-family: inherit;
       font-size: 10px;
       margin: 0 1px;
@@ -640,8 +786,8 @@
     }
 
     .intro-side {
-      background: var(--surface);
-      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .86) 0%, rgba(255, 252, 246, .76) 100%);
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border);
       padding: 28px;
       height: 100%;
@@ -651,8 +797,9 @@
     }
 
     .intro-side h2 {
+      font-family: 'Manrope', 'DM Sans', sans-serif;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 20px;
       display: flex;
       align-items: center;
@@ -675,16 +822,16 @@
     }
 
     .intro-side.before {
-      border-color: rgba(201, 60, 55, .2);
+      border-color: rgba(219, 107, 95, .2);
     }
 
     .intro-side.after {
-      border-color: rgba(13, 110, 106, .2);
+      border-color: rgba(47, 181, 138, .2);
     }
 
     .strategy-slide .intro-side.before,
     .strategy-slide .intro-side.after {
-      border-color: rgba(13, 110, 106, .22);
+      border-color: rgba(47, 181, 138, .22);
     }
 
     .strategy-slide .intro-side.before h2 .dot,
@@ -694,8 +841,8 @@
 
     .strategy-slide .before .intro-item-icon,
     .strategy-slide .after .intro-item-icon {
-      background: rgba(13, 110, 106, .08);
-      border: 1px solid rgba(13, 110, 106, .18);
+      background: rgba(47, 181, 138, .08);
+      border: 1px solid rgba(47, 181, 138, .18);
     }
 
     .strategy-slide .intro-arrow {
@@ -728,13 +875,13 @@
     }
 
     .before .intro-item-icon {
-      background: rgba(201, 60, 55, .08);
-      border: 1px solid rgba(201, 60, 55, .18);
+      background: rgba(219, 107, 95, .08);
+      border: 1px solid rgba(219, 107, 95, .18);
     }
 
     .after .intro-item-icon {
-      background: rgba(13, 110, 106, .08);
-      border: 1px solid rgba(13, 110, 106, .18);
+      background: rgba(47, 181, 138, .08);
+      border: 1px solid rgba(47, 181, 138, .18);
     }
 
     .intro-item-text strong {
@@ -778,15 +925,22 @@
 
     @media (max-width: 980px) {
       .slide {
-        padding: 68px 18px 18px;
+        padding: 96px 18px 18px;
       }
 
       .nav {
+        left: 12px;
+        right: 12px;
+        top: 12px;
         padding: 10px 12px;
       }
 
-      .nav-title {
+      .nav-title span {
         display: none;
+      }
+
+      .title-shell {
+        padding: 28px 22px;
       }
 
       .slide-title {
@@ -833,8 +987,8 @@
       align-items: center;
       justify-content: center;
       font-size: 14px;
-      background: rgba(13, 110, 106, .08);
-      border: 1px solid rgba(13, 110, 106, .15);
+      background: rgba(47, 181, 138, .08);
+      border: 1px solid rgba(47, 181, 138, .15);
     }
 
     .impact-line p {
@@ -859,18 +1013,18 @@
     }
 
     .tag-customer {
-      background: rgba(123, 78, 160, .1);
+      background: rgba(87, 113, 217, .12);
       color: var(--purple);
     }
 
     .tag-agent {
-      background: rgba(13, 110, 106, .1);
+      background: rgba(15, 111, 222, .1);
       color: var(--accent);
     }
 
     .tag-business {
-      background: rgba(13, 110, 106, .08);
-      color: #4a8a6d;
+      background: rgba(246, 189, 85, .18);
+      color: #9b6c08;
     }
 
     .slide[data-active="true"] .impact-line {
@@ -954,7 +1108,12 @@
 
   <!-- Navigation -->
   <nav class="nav">
-    <div class="nav-title">Unified Support Experience</div>
+    <div class="nav-brand">
+      <img class="nav-logo" src="https://payfit.com/icons/payFit-Z2fWbGJ.svg" alt="PayFit">
+      <div class="nav-title">
+        <strong>Unified Support Experience</strong>
+      </div>
+    </div>
     <div class="nav-steps">
       <div class="nav-dot active" data-slide="0"></div>
       <div class="nav-dot" data-slide="1"></div>
@@ -977,7 +1136,9 @@
 
       <!-- ════════════════ SLIDE 0 — Intro ════════════════ -->
       <section class="slide title-only-slide" data-active="true">
-        <h1>Unified support experience for both agents and clients</h1>
+        <div class="title-shell">
+          <h1>Unified support experience for both agents and clients</h1>
+        </div>
       </section>
 
       <!-- ════════════════ SLIDE 1 — Vision / Intro ════════════════ -->
@@ -1302,7 +1463,7 @@
                 <div class="arch-box external" style="width:100%">Salesforce Case</div>
                 <span class="arch-arrow">&#8596;</span>
                 <div class="arch-row-internal">
-                  <div class="arch-box app" style="border-color:#ff9500; background:rgba(255,149,0,.06); flex:1">
+                  <div class="arch-box app" style="border-color:rgba(246, 189, 85, .38); background:linear-gradient(135deg, rgba(255, 242, 184, .62) 0%, rgba(255, 255, 255, .9) 100%); flex:1">
                     <div class="app-title">support.payfit.com/inbox</div>
                     <div class="app-sub">Customer cases list</div>
                   </div>
@@ -1316,7 +1477,7 @@
                 <div class="arch-row-internal">
                   <div class="arch-box internal">Copilot Threads</div>
                   <span class="arch-arrow">&#8596;</span>
-                  <div class="arch-box app" style="border-color:#ff9500; background:rgba(255,149,0,.06); flex:1">
+                  <div class="arch-box app" style="border-color:rgba(246, 189, 85, .38); background:linear-gradient(135deg, rgba(255, 242, 184, .62) 0%, rgba(255, 255, 255, .9) 100%); flex:1">
                     <div class="app-title">PayFit App</div>
                     <div class="app-sub">Copilot threads list</div>
                   </div>
@@ -1328,7 +1489,7 @@
                 <div class="arch-box external" style="width:100%">Amazon Connect</div>
                 <span class="arch-arrow">&#8592;</span>
                 <div class="arch-row-internal">
-                  <div class="arch-box internal" style="border-color:#ff9500; background:rgba(255,149,0,.04)">Request
+                  <div class="arch-box internal" style="border-color:rgba(246, 189, 85, .38); background:rgba(255, 242, 184, .42)">Request
                     callback</div>
                   <span style="font-size:11px; color:var(--text-muted)">inside PayFit App</span>
                 </div>
@@ -1434,7 +1595,7 @@
                 <div class="arch-box internal" style="grid-column:3; grid-row:2;">Copilot Threads</div>
                 <span class="arch-arrow" style="grid-column:4; grid-row:2;">&#8594;</span>
 
-                <div class="arch-box app phase1-app" style="border-color:#ff9500; background:rgba(255,149,0,.06)">
+                <div class="arch-box app phase1-app" style="border-color:rgba(246, 189, 85, .38); background:linear-gradient(135deg, rgba(255, 242, 184, .62) 0%, rgba(255, 255, 255, .9) 100%)">
                   <div class="app-title">PayFit App</div>
                   <div class="app-sub">Support requests + Copilot threads</div>
                 </div>
@@ -1442,7 +1603,7 @@
                 <div class="arch-box external" style="width:100%; grid-column:1; grid-row:3;">Amazon Connect</div>
                 <span class="arch-arrow" style="grid-column:2; grid-row:3;">&#8592;</span>
                 <div class="arch-row-internal" style="grid-column:3 / span 3; grid-row:3;">
-                  <div class="arch-box internal" style="border-color:#ff9500; background:rgba(255,149,0,.04)">Request
+                  <div class="arch-box internal" style="border-color:rgba(246, 189, 85, .38); background:rgba(255, 242, 184, .42)">Request
                     callback</div>
                   <span style="font-size:11px; color:var(--text-muted)">inside PayFit App</span>
                 </div>
@@ -1552,7 +1713,7 @@
               </div>
               <div class="arch-arrow">&#8596;</div>
               <div class="arch-column">
-                <div class="arch-box app" style="border-color:#ff9500; background:rgba(255,149,0,.06)">
+                <div class="arch-box app" style="border-color:rgba(246, 189, 85, .38); background:linear-gradient(135deg, rgba(255, 242, 184, .62) 0%, rgba(255, 255, 255, .9) 100%)">
                   <div class="app-title">PayFit App</div>
                   <div class="app-sub">Support Requests (unified)</div>
                 </div>
@@ -1661,7 +1822,7 @@
               </div>
               <div class="arch-arrow">&#8596;</div>
               <div class="arch-column">
-                <div class="arch-box app" style="border-color:#ff9500; background:rgba(255,149,0,.06)">
+                <div class="arch-box app" style="border-color:rgba(246, 189, 85, .38); background:linear-gradient(135deg, rgba(255, 242, 184, .62) 0%, rgba(255, 255, 255, .9) 100%)">
                   <div class="app-title">PayFit App</div>
                   <div class="app-sub">Support Requests (unified)</div>
                 </div>
