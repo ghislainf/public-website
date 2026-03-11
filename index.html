@@ -838,6 +838,19 @@
       color: var(--text);
     }
 
+    .key-changes.key-changes-risk {
+      border-color: rgba(219, 107, 95, .28);
+      background: linear-gradient(180deg, rgba(255, 240, 238, .88) 0%, rgba(255, 248, 246, .86) 100%);
+    }
+
+    .key-changes.key-changes-risk h3 {
+      color: #9f2f25;
+    }
+
+    .key-changes.key-changes-risk li::before {
+      background: var(--red);
+    }
+
     .slide-risk .arch-panel,
     .slide-risk .info-card,
     .slide-risk .key-changes {
@@ -2112,8 +2125,8 @@
                 </tbody>
               </table>
             </div>
-            <div class="key-changes">
-              <h3>Key characteristics of this alternative</h3>
+            <div class="key-changes key-changes-risk">
+              <h3>Drawbacks</h3>
               <ul>
                 <li><strong>Evolution constraints</strong> — without Support Request, we will not be able to build the
                   sync-to-async journey and Agent Cockpit</li>
