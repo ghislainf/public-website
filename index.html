@@ -1233,7 +1233,6 @@
         <div class="nav-dot" data-slide="7"></div>
         <div class="nav-dot" data-slide="8"></div>
         <div class="nav-dot" data-slide="9"></div>
-        <div class="nav-dot" data-slide="10"></div>
       </div>
     <div class="nav-arrows">
       <button id="prev" disabled>&#8592;</button>
@@ -2124,71 +2123,6 @@
                   Amazon Connect, so we need to manually reconcile multiple data sources to recreate a continuity view</li>
                 <li><strong>Async interactions stay on Salesforce</strong> — case handling continues on Salesforce for
                   asynchronous flows</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ════════════════ SLIDE 9 — Why Support Request Matters ════════════════ -->
-      <section class="slide">
-        <div class="slide-header">
-          <span class="slide-badge badge-phase2">Support Request foundation</span>
-          <h1 class="slide-title">Why Support Request is central to the target model</h1>
-          <p class="slide-subtitle">Support Request becomes the single operational backbone for both customer and
-            agent journeys, while external systems keep their role without fragmenting ownership.</p>
-        </div>
-        <div class="slide-body">
-          <div class="arch-panel">
-            <h3>Core Objectives</h3>
-            <div class="impact-grid">
-              <div class="impact-line">
-                <div class="impact-card-icon">1</div>
-                <p><strong>Single source of truth + reliable API</strong> &mdash; Support Request is the canonical object
-                  for support state, readable and actionable by both agents and customers.</p>
-                <span class="impact-tag tag-business">Foundation</span>
-              </div>
-              <div class="impact-line">
-                <div class="impact-card-icon">2</div>
-                <p><strong>One shared tracking point</strong> &mdash; Agents and customers follow the same request in the
-                  same place, even when channels switch between async, sync, and AI interactions.</p>
-                <span class="impact-tag tag-customer">Continuity</span>
-              </div>
-            </div>
-          </div>
-          <div class="info-col">
-            <div class="info-card">
-              <h3>System roles in this model</h3>
-              <table class="status-table">
-                <thead>
-                  <tr>
-                    <th>System</th>
-                    <th>Role</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Support Request</td>
-                    <td>Primary object and API for request lifecycle</td>
-                  </tr>
-                  <tr>
-                    <td>Amazon Connect</td>
-                    <td>Assignment and routing to Support Requests</td>
-                  </tr>
-                  <tr>
-                    <td>Salesforce Case</td>
-                    <td>Bi-directional sync with Support Requests</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="key-changes">
-              <h3>What this unlocks</h3>
-              <ul>
-                <li><strong>Consistent state for everyone</strong> &mdash; customers and agents see the same progression</li>
-                <li><strong>Channel-agnostic continuity</strong> &mdash; request history stays unified even when channel changes</li>
-                <li><strong>Clear system boundaries</strong> &mdash; Connect assigns, Salesforce syncs, Support Request owns</li>
-                <li><strong>Safer long-term evolution</strong> &mdash; we can improve tooling without changing the core contract</li>
               </ul>
             </div>
           </div>
