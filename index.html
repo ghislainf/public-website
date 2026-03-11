@@ -1222,18 +1222,19 @@
         <strong>Unified Support Experience</strong>
       </div>
     </div>
-    <div class="nav-steps">
-      <div class="nav-dot active" data-slide="0"></div>
-      <div class="nav-dot" data-slide="1"></div>
-      <div class="nav-dot" data-slide="2"></div>
-      <div class="nav-dot" data-slide="3"></div>
-      <div class="nav-dot" data-slide="4"></div>
-      <div class="nav-dot" data-slide="5"></div>
-      <div class="nav-dot" data-slide="6"></div>
-      <div class="nav-dot" data-slide="7"></div>
-      <div class="nav-dot" data-slide="8"></div>
-      <div class="nav-dot" data-slide="9"></div>
-    </div>
+      <div class="nav-steps">
+        <div class="nav-dot active" data-slide="0"></div>
+        <div class="nav-dot" data-slide="1"></div>
+        <div class="nav-dot" data-slide="2"></div>
+        <div class="nav-dot" data-slide="3"></div>
+        <div class="nav-dot" data-slide="4"></div>
+        <div class="nav-dot" data-slide="5"></div>
+        <div class="nav-dot" data-slide="6"></div>
+        <div class="nav-dot" data-slide="7"></div>
+        <div class="nav-dot" data-slide="8"></div>
+        <div class="nav-dot" data-slide="9"></div>
+        <div class="nav-dot" data-slide="10"></div>
+      </div>
     <div class="nav-arrows">
       <button id="prev" disabled>&#8592;</button>
       <button id="next">&#8594;</button>
@@ -1541,7 +1542,7 @@
               <div class="intro-item">
                 <div class="intro-item-icon">Alt</div>
                 <div class="intro-item-text">
-                  <strong>Alternative path (not recommended)</strong>
+                  <strong>Alternative path</strong>
                   <span>No Support Request intermediary: keep Salesforce Cases and route only live-chat/callbacks via
                     Amazon Connect.</span>
                 </div>
@@ -2006,16 +2007,15 @@
         </div>
       </section>
 
-      <!-- ════════════════ SLIDE 8 — Alternative without Support Request (Not Recommended) ════════════════ -->
-      <section class="slide slide-risk">
+      <!-- ════════════════ SLIDE 8 — Alternative without Support Request ════════════════ -->
+      <section class="slide">
         <div class="slide-header">
-          <span class="slide-badge badge-risk">Alternative path (not recommended)</span>
+          <span class="slide-badge badge-phase3">Alternative path</span>
           <h1 class="slide-title">No Support Request: direct Salesforce Cases + Amazon Connect Live-chat</h1>
-          <p class="slide-subtitle"><strong>This alternative goes against the target vision.</strong> Without an
-            intermediate Support Request as source of truth, we cannot migrate async cases to Amazon Connect and keep
-            Salesforce only for the required agent populations. Amazon Connect can only cover live-chat and callbacks,
-            and we would need to fetch multiple data sources to recreate partial continuity for customers.</p>
-          <span class="timeline-tag timeline-tag-risk">Timeline: N/A</span>
+          <p class="slide-subtitle">In this alternative, there is no intermediate Support Request entity. Salesforce
+            Cases remain the object for async interactions, while Amazon Connect covers live-chat and callbacks.
+            Continuity in the PayFit app depends on aggregating data from multiple sources.</p>
+          <span class="timeline-tag">Timeline: N/A</span>
         </div>
         <div class="slide-body">
           <div class="arch-panel">
@@ -2114,21 +2114,81 @@
               </table>
             </div>
             <div class="key-changes">
-              <h3>Why we do not recommend this alternative</h3>
+              <h3>Key characteristics of this alternative</h3>
               <ul>
-                <li><strong>No intermediate entity</strong> — no Support Request means no stable source of truth for
-                  both Salesforce and Connect</li>
-                <li><strong>Async cases cannot migrate to Amazon Connect</strong> — without Support Request as
-                  intermediate entity, case handling must remain on Salesforce</li>
-                <li><strong>Dual-write architecture</strong> — the console must write every update to two case systems in
-                  parallel</li>
-                <li><strong>Higher mismatch risk</strong> — if one write fails, cases diverge and require reconciliation</li>
-                <li><strong>Higher maintenance cost</strong> — permanent sync, mapping, and recovery logic becomes core
-                  platform burden</li>
-                <li><strong>Weaker customer continuity</strong> — we must query multiple data sources to rebuild journey
-                  context</li>
-                <li><strong>Strategic dead-end</strong> — limits evolution toward Agent Cockpit and unified sync/async
-                  journey</li>
+                <li><strong>Evolution constraints</strong> — without Support Request, we will not be able to build the
+                  sync-to-async journey and Agent Cockpit</li>
+                <li><strong>Split agent tooling</strong> — we will need to keep two agent consoles: one on Salesforce and
+                  one on Amazon Connect</li>
+                <li><strong>No intermediate entity</strong> — Support Request is not introduced between Salesforce and
+                  Amazon Connect, so we need to manually reconcile multiple data sources to recreate a continuity view</li>
+                <li><strong>Async interactions stay on Salesforce</strong> — case handling continues on Salesforce for
+                  asynchronous flows</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 9 — Why Support Request Matters ════════════════ -->
+      <section class="slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-phase2">Support Request foundation</span>
+          <h1 class="slide-title">Why Support Request is central to the target model</h1>
+          <p class="slide-subtitle">Support Request becomes the single operational backbone for both customer and
+            agent journeys, while external systems keep their role without fragmenting ownership.</p>
+        </div>
+        <div class="slide-body">
+          <div class="arch-panel">
+            <h3>Core Objectives</h3>
+            <div class="impact-grid">
+              <div class="impact-line">
+                <div class="impact-card-icon">1</div>
+                <p><strong>Single source of truth + reliable API</strong> &mdash; Support Request is the canonical object
+                  for support state, readable and actionable by both agents and customers.</p>
+                <span class="impact-tag tag-business">Foundation</span>
+              </div>
+              <div class="impact-line">
+                <div class="impact-card-icon">2</div>
+                <p><strong>One shared tracking point</strong> &mdash; Agents and customers follow the same request in the
+                  same place, even when channels switch between async, sync, and AI interactions.</p>
+                <span class="impact-tag tag-customer">Continuity</span>
+              </div>
+            </div>
+          </div>
+          <div class="info-col">
+            <div class="info-card">
+              <h3>System roles in this model</h3>
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>System</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Support Request</td>
+                    <td>Primary object and API for request lifecycle</td>
+                  </tr>
+                  <tr>
+                    <td>Amazon Connect</td>
+                    <td>Assignment and routing to Support Requests</td>
+                  </tr>
+                  <tr>
+                    <td>Salesforce Case</td>
+                    <td>Bi-directional sync with Support Requests</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="key-changes">
+              <h3>What this unlocks</h3>
+              <ul>
+                <li><strong>Consistent state for everyone</strong> &mdash; customers and agents see the same progression</li>
+                <li><strong>Channel-agnostic continuity</strong> &mdash; request history stays unified even when channel changes</li>
+                <li><strong>Clear system boundaries</strong> &mdash; Connect assigns, Salesforce syncs, Support Request owns</li>
+                <li><strong>Safer long-term evolution</strong> &mdash; we can improve tooling without changing the core contract</li>
               </ul>
             </div>
           </div>
