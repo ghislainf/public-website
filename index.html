@@ -1093,6 +1093,14 @@
         justify-self: start;
       }
 
+      .chart-links {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-link-card img {
+        height: 132px;
+      }
+
     }
 
     .impact-line:last-child {
@@ -1145,6 +1153,105 @@
     .tag-business {
       background: rgba(246, 189, 85, .18);
       color: #9b6c08;
+    }
+
+    .chart-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+      flex-shrink: 0;
+    }
+
+    .chart-link-card {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .82) 0%, rgba(255, 252, 246, .72) 100%);
+      border-radius: 14px;
+      box-shadow: var(--shadow-soft);
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .chart-link-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(15, 111, 222, .3);
+    }
+
+    .chart-link-card img {
+      width: 100%;
+      height: 108px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid rgba(24, 48, 77, .1);
+      background: #fff;
+    }
+
+    .chart-link-card strong {
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .chart-link-card span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .chart-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 32, 52, .7);
+      backdrop-filter: blur(4px);
+      z-index: 220;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .chart-modal.open {
+      display: flex;
+    }
+
+    .chart-modal-panel {
+      position: relative;
+      width: min(1360px, 100%);
+      max-height: 90vh;
+      background: #fff;
+      border-radius: 18px;
+      border: 1px solid rgba(24, 48, 77, .14);
+      box-shadow: 0 24px 70px rgba(15, 24, 39, .35);
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .chart-modal-panel img {
+      width: 100%;
+      height: auto;
+      max-height: calc(90vh - 28px);
+      object-fit: contain;
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+
+    .chart-modal-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 1px solid rgba(24, 48, 77, .2);
+      background: rgba(255, 255, 255, .95);
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+      line-height: 1;
     }
 
     .slide[data-active="true"] .impact-line {
@@ -1246,6 +1353,7 @@
         <div class="nav-dot" data-slide="7"></div>
         <div class="nav-dot" data-slide="8"></div>
         <div class="nav-dot" data-slide="9"></div>
+        <div class="nav-dot" data-slide="10"></div>
       </div>
     <div class="nav-arrows">
       <button id="prev" disabled>&#8592;</button>
@@ -1493,6 +1601,69 @@
               lowers Salesforce dependency and footprint.</p>
             <span class="impact-tag tag-business">Business</span>
           </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ SLIDE 3 — Agent Experience Drivers ════════════════ -->
+      <section class="slide">
+        <div class="slide-header">
+          <span class="slide-badge badge-vision">Why now</span>
+          <h1 class="slide-title">Why we should accelerate the new Agent Experience</h1>
+          <p class="slide-subtitle">As hot-channel demand grows, agent experience becomes a direct driver of customer
+            satisfaction. The attached charts reinforce why this shift is now a priority.</p>
+        </div>
+        <div class="impact-grid">
+          <div class="impact-line">
+            <div class="impact-card-icon">&#9889;</div>
+            <p><strong>Expected responsiveness on hot channels</strong> &mdash; Voice and live interactions require
+              immediate, high-quality replies without forcing agents into rushed decisions.</p>
+            <span class="impact-tag tag-agent">Agent</span>
+          </div>
+          <div class="impact-line">
+            <div class="impact-card-icon">360</div>
+            <p><strong>360 customer knowledge in one place</strong> &mdash; Agents need commercial context (churn risk),
+              payroll cycle status (payroll done), and full conversation history to resolve faster.</p>
+            <span class="impact-tag tag-agent">Agent</span>
+          </div>
+          <div class="impact-line">
+            <div class="impact-card-icon">NBA</div>
+            <p><strong>Next Best Actions are key for BPO agents</strong> &mdash; Guided actions reduce decision friction
+              and improve consistency in handling quality.</p>
+            <span class="impact-tag tag-business">Business</span>
+          </div>
+          <div class="impact-line">
+            <div class="impact-card-icon">&#x1f4ca;</div>
+            <p><strong>Chart insight #1: advisor pressure impacts quality</strong> &mdash; 47-52% report stressed/rushed
+              advisors, and 84-89% say this impacts interaction quality.</p>
+            <span class="impact-tag tag-customer">Customer</span>
+          </div>
+          <div class="impact-line">
+            <div class="impact-card-icon">&#x1f4de;</div>
+            <p><strong>Chart insight #2: strengthen voice and hot-channel coverage</strong> &mdash; Telephone satisfaction
+              is high (82-87%), while chatbot satisfaction remains lower (50-54%), highlighting the need for best-in-class
+              agent XP to protect CSAT.</p>
+            <span class="impact-tag tag-business">Business</span>
+          </div>
+          <div class="impact-line">
+            <div class="impact-card-icon">&#x1f4c5;</div>
+            <p><strong>Important deadline: Salesforce Connect CTI sunset in Feb 2028</strong> &mdash; Salesforce Connect CTI
+              will no longer be available after Feb 2028, which makes the transition to the new agent experience
+              time-critical.</p>
+            <span class="impact-tag" style="background: rgba(219, 107, 95, .16); color: #9f2f25;">Risk</span>
+          </div>
+        </div>
+        <div class="chart-links">
+          <button class="chart-link-card" type="button" data-chart-src="img/moments.png" aria-label="Open Moments chart">
+            <img src="img/moments.png" alt="Moments spent with an adviser chart">
+            <strong>Chart 1: Moments spent with an adviser</strong>
+            <span>Click to open full-size view</span>
+          </button>
+          <button class="chart-link-card" type="button" data-chart-src="img/satisfaction.png"
+            aria-label="Open Satisfaction chart">
+            <img src="img/satisfaction.png" alt="Satisfaction with customer services chart">
+            <strong>Chart 2: Satisfaction with customer services</strong>
+            <span>Click to open full-size view</span>
+          </button>
         </div>
       </section>
 
@@ -2150,6 +2321,13 @@
     <kbd>&#8592;</kbd> <kbd>&#8594;</kbd> arrow keys to navigate
   </div>
 
+  <div class="chart-modal" id="chartModal" aria-hidden="true">
+    <div class="chart-modal-panel">
+      <button class="chart-modal-close" id="chartModalClose" type="button" aria-label="Close chart">&times;</button>
+      <img id="chartModalImage" src="" alt="Chart full size">
+    </div>
+  </div>
+
   <script>
     let current = 0;
     const track = document.getElementById('slidesTrack');
@@ -2158,6 +2336,10 @@
     const total = slides.length;
     const prevBtn = document.getElementById('prev');
     const nextBtn = document.getElementById('next');
+    const chartCards = document.querySelectorAll('[data-chart-src]');
+    const chartModal = document.getElementById('chartModal');
+    const chartModalImage = document.getElementById('chartModalImage');
+    const chartModalClose = document.getElementById('chartModalClose');
 
     slides.forEach(function (s, i) { s.id = 'slide-' + i; });
 
@@ -2193,11 +2375,46 @@
     var initialIndex = getIndexFromHash();
     if (initialIndex !== null) goTo(initialIndex, false);
 
+    function isChartModalOpen() {
+      return chartModal.classList.contains('open');
+    }
+
+    function closeChartModal() {
+      chartModal.classList.remove('open');
+      chartModal.setAttribute('aria-hidden', 'true');
+      chartModalImage.src = '';
+    }
+
+    function openChartModal(src, altText) {
+      chartModalImage.src = src;
+      chartModalImage.alt = altText;
+      chartModal.classList.add('open');
+      chartModal.setAttribute('aria-hidden', 'false');
+    }
+
+    chartCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        var image = card.querySelector('img');
+        var altText = image ? image.alt : 'Chart full size';
+        openChartModal(card.dataset.chartSrc, altText);
+      });
+    });
+
+    chartModalClose.addEventListener('click', closeChartModal);
+    chartModal.addEventListener('click', function (e) {
+      if (e.target === chartModal) closeChartModal();
+    });
+
     dots.forEach(function (d) { d.addEventListener('click', function () { goTo(+d.dataset.slide); }); });
     prevBtn.addEventListener('click', function () { goTo(current - 1); });
     nextBtn.addEventListener('click', function () { goTo(current + 1); });
 
     document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isChartModalOpen()) {
+        closeChartModal();
+        return;
+      }
+      if (isChartModalOpen()) return;
       if (e.key === 'ArrowRight') goTo(current + 1);
       if (e.key === 'ArrowLeft') goTo(current - 1);
     });
